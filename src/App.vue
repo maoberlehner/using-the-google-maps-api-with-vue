@@ -63,8 +63,18 @@ export default {
         map.fitBounds(results[0].geometry.viewport);
       });
 
+      const markerClickHandler = (marker) => {
+        map.setZoom(13);
+        map.setCenter(marker.getPosition());
+      };
+
       const markers = locations
-        .map(x => new google.maps.Marker({ ...x, map }));
+        .map((location) => {
+          const marker = new google.maps.Marker({ ...location, map });
+          marker.addListener(`click`, () => markerClickHandler(marker));
+
+          return marker;
+        });
 
       // eslint-disable-next-line no-new
       new MarkerClusterer(map, markers, {
