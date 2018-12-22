@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import MarkerClusterer from '@google/markerclusterer';
+
 import gmapsInit from './utils/gmaps';
 
 const locations = [
@@ -63,6 +65,11 @@ export default {
 
       const markers = locations
         .map(x => new google.maps.Marker({ ...x, map }));
+
+      // eslint-disable-next-line no-new
+      new MarkerClusterer(map, markers, {
+        imagePath: `https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m`,
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
